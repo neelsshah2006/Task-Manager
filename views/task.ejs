@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= task %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-900 min-h-screen flex items-center justify-center font-sans">
+    <div class="w-full mx-auto p-8">
+        <div class="bg-zinc-800 p-8 rounded-2xl shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-white tracking-tight">
+                <%= task %>
+            </h3>
+            <p class="text-gray-300 mb-8 leading-relaxed">
+                <%= data %>
+            </p>
+            <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">
+                ← Back to Task List
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
