@@ -9,8 +9,17 @@ app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
   fs.readdir(path.join(__dirname, "tasks"), (err, files) => {
-    res.render("index", { files: files });
+    const taskFiles = files
+      ? files.filter(
+          (file) => file.endsWith(".txt") && file !== "favicon.ico.txt"
+        )
+      : [];
+    res.render("index", { files: taskFiles });
   });
+});
+
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
 });
 
 app.post("/create", function (req, res) {
