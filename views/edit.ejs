@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Edit <%= filename %>
+    </title>
+</head>
+
+<body class="bg-zinc-900 text-white font-sans">
+    <div class="min-h-screen flex items-center justify-center px-4 py-10">
+        <div class="w-full max-w-7xl space-y-10">
+            <div class="bg-zinc-800 p-6 rounded-xl shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-white">Create a Task</h2>
+                <form class="flex flex-col gap-4" action="/editfile/<%= filename %>" method="POST">
+                    <input
+                        class="w-full rounded-lg px-4 py-2 bg-zinc-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        type="text" placeholder="Title goes here" name="taskTitle" value="<%= filename %>" />
+
+                    <textarea
+                        class="w-full h-32 rounded-lg px-4 py-2 bg-zinc-700 resize-none placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        placeholder="Write your task here" name="taskDesc"><%= data %></textarea>
+
+                    <input
+                        class="self-start bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg cursor-pointer transition"
+                        type="submit" value="Edit Task" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

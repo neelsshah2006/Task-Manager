@@ -52,6 +52,7 @@ app.post("/create", function (req, res) {
 app.get("/:task", function (req, res) {
   fs.readFile(
     path.join(__dirname, `tasks/${req.params.task}.txt`),
+    "utf-8",
     (err, data) => {
       if (err) {
         console.log(err);
@@ -61,6 +62,89 @@ app.get("/:task", function (req, res) {
       }
     }
   );
+});
+
+app.get("/edit/:filename", function (req, res) {
+  fs.readFile(
+    path.join(__dirname, `tasks/${req.params.filename}.txt`),
+    "utf-8",
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error reading task");
+      } else {
+        res.render("edit", { filename: req.params.filename, data: data });
+      }
+    }
+  );
+});
+
+app.post("/editfile/:filename", (req, res) => {
+  if (req.body.taskTitle == req.params.filename) {
+    if (req.body.taskTitle != "" && req.body.taskDesc != "") {
+      fs.writeFile(
+        path.join(
+          __dirname,
+          "tasks",
+          `${req.body.taskTitle.split(" ").join("")}.txt`
+        ),
+        req.body.taskDesc,
+        (err) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error Editing task");
+            res.redirect("/?msg=Error Editing the task");
+          } else {
+            res.redirect("/");
+          }
+        }
+      );
+    } else {
+      if (req.body.taskTitle == "") {
+        res.redirect("/?msg=Please give the title to the task");
+      } else {
+        res.redirect("/?msg=Please give the Description to the task");
+      }
+    }
+  } else {
+    const fName = req.body.taskTitle.split(" ").join("");
+    fs.rename(
+      path.join(__dirname, "tasks", `${req.params.filename}.txt`),
+      path.join(__dirname, "tasks", `${fName}.txt`),
+      (err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error Editing task");
+          res.redirect("/?msg=Error creating the task");
+        } else {
+          fs.writeFile(
+            path.join(__dirname, "tasks", `${fName}.txt`),
+            req.body.taskDesc,
+            (err) => {
+              if (err) {
+                console.log(err);
+                res.status(500).send("Error Editing task");
+                res.redirect("/?msg=Error Editing the task");
+              } else {
+                res.redirect("/");
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+});
+
+app.get("/delete/:filename", function (req, res) {
+  fs.rm(path.join(__dirname, `/tasks/${req.params.filename}.txt`), (err) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Error deleting task");
+    } else {
+      res.redirect("/");
+    }
+  });
 });
 
 app.listen(3000, function () {

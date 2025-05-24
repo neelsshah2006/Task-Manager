@@ -14,31 +14,41 @@
       <div class="bg-zinc-800 p-6 rounded-xl shadow-md">
         <h2 class="text-2xl font-semibold mb-4 text-white">Create a Task</h2>
         <form class="flex flex-col gap-4" action="/create" method="POST">
-          <input class="w-full rounded-lg px-4 py-2 bg-zinc-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" type="text" placeholder="Title goes here" name="taskTitle" />
+          <input
+            class="w-full rounded-lg px-4 py-2 bg-zinc-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            type="text" placeholder="Title goes here" name="taskTitle" />
 
-          <textarea class="w-full h-32 rounded-lg px-4 py-2 bg-zinc-700 resize-none placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Write your task here" name="taskDesc"></textarea>
+          <textarea
+            class="w-full h-32 rounded-lg px-4 py-2 bg-zinc-700 resize-none placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            placeholder="Write your task here" name="taskDesc"></textarea>
 
-          <input class="self-start bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg cursor-pointer transition" type="submit" value="Create Task" />
+          <input
+            class="self-start bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg cursor-pointer transition"
+            type="submit" value="Create Task" />
         </form>
       </div>
       <div class="flex flex-col gap-4">
         <h2 class="text-4xl font-bold">Tasks</h2>
         <div class="flex flex-col gap-2">
           <% if(files.length> 0) { %>
-          <% files.forEach(element=> { %>
-          <% let fName=element.split('.')[0] %>
-          <div class="bg-zinc-800 p-6 rounded-xl shadow-md w-full">
-            <h3 class="text-xl font-semibold text-white">
-              <%= fName %>
-            </h3>
-            <a class="text-blue-400 hover:underline" href=<%=`${fName}` %>>Read More</a>
-          </div>
-          <% }); %>
-          <% } else { %>
-          <div class="bg-zinc-800 p-6 rounded-xl shadow-md w-full">
-            <h3 class="text-xl font-semibold mb-2 text-white">No tasks available</h3>
-          </div>
-          <% } %>
+            <% files.forEach(element=> { %>
+              <% let fName=element.split('.')[0] %>
+                <div class="bg-zinc-800 p-6 rounded-xl shadow-md w-full">
+                  <h3 class="text-xl font-semibold text-white">
+                    <%= fName %>
+                  </h3>
+                  <div class="flex justify-between items-center">
+                    <a class="text-blue-400 hover:underline" href=<%=`${fName}` %>>Read More</a>
+                    <a class="text-blue-400 hover:underline" href="/edit/<%= fName %>">Edit Task</a>
+                    <a class="text-red-400 hover:underline" href="/delete/<%= fName %>">Delete Task</a>
+                  </div>
+                </div>
+                <% }); %>
+                  <% } else { %>
+                    <div class="bg-zinc-800 p-6 rounded-xl shadow-md w-full">
+                      <h3 class="text-xl font-semibold mb-2 text-white">No tasks available</h3>
+                    </div>
+                    <% } %>
         </div>
       </div>
     </div>
